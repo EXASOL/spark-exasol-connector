@@ -170,8 +170,8 @@ class TypesSuite extends FunSuite with Matchers {
     )
 
     val expectedStr =
-      "bool_col BOOLEAN, str_col CLOB, int_col INTEGER NOT NULL, float_col FLOAT," +
-        " double_col DOUBLE, date_col DATE, timestamp_col TIMESTAMP"
+      """"bool_col" BOOLEAN, "str_col" CLOB, "int_col" INTEGER NOT NULL, "float_col" FLOAT, """ +
+        """"double_col" DOUBLE, "date_col" DATE, "timestamp_col" TIMESTAMP"""
 
     assert(createTableSchema(schema) === expectedStr)
   }

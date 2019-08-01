@@ -87,7 +87,7 @@ class SaveSuite extends FunSuite with BaseDockerSuite with DataFrameSuiteBase {
 
     val df = sc
       .parallelize(testData, partitionCnt)
-      .toDF("name", "city", "date_info", "unicode_col")
+      .toDF("NAME", "CITY", "DATE_INFO", "UNICODE_COL")
 
     df.write
       .mode(mode)

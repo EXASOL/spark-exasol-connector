@@ -131,7 +131,7 @@ class LoadSuite extends FunSuite with BaseDockerSuite with DataFrameSuiteBase {
     }
 
     assert(
-      thrown.getMessage.contains("object A.DATE_INFORMATION not found")
+      thrown.getMessage.contains("object \"A\".\"DATE_INFORMATION\" not found")
     )
   }
 
