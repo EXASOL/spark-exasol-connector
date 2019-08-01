@@ -62,7 +62,7 @@ class ExasolWriter(
   }
 
   def insertStmt(): String = {
-    val columns = rddSchema.fields.map(_.name).mkString(",")
+    val columns = rddSchema.fields.map(f => Types.quoteIdentifier(f.name)).mkString(",")
     val placeholders = rddSchema.fields.map(_ => "?").mkString(",")
     s"INSERT INTO $tableName ($columns) VALUES ($placeholders)"
   }

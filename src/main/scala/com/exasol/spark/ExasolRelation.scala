@@ -102,12 +102,21 @@ class ExasolRelation(
    * @return An enriched query with column selection and where clauses
    */
   private[this] def enrichQuery(columns: Array[String], filters: Array[Filter]): String = {
-    val columnStr = if (columns.isEmpty) "COUNT(*)" else columns.map(c => s"A.$c").mkString(", ")
+    val columnStr = if (columns.isEmpty) "COUNT(*)" else getColumnsAsString(columns)
     val filterStr = Filters.createWhereClause(schema, filters)
     val whereClause = if (filterStr.trim.isEmpty) "" else s"WHERE $filterStr"
     val enrichedQuery = s"SELECT $columnStr FROM ($queryString) A $whereClause"
     logger.info(s"Running with enriched query: $enrichedQuery")
     enrichedQuery
+  }
+
+  private[this] def getColumnsAsString(columns: Array[String]): String = {
+    val builder = new StringBuilder()
+    columns.foreach { col =>
+      val quoted = Types.quoteIdentifier(col)
+      builder.append(", ").append("A.").append(quoted)
+    }
+    builder.substring(1)
   }
 
 }

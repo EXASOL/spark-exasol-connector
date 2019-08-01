@@ -207,6 +207,9 @@ object Types extends LazyLogging {
     newSchema
   }
 
+  def quoteIdentifier(identifier: String): String =
+    "\"" + identifier.replace("\"", "\"\"") + "\""
+
   /**
    * Returns comma separated column name and column types for Exasol table from Spark schema
    *
@@ -217,7 +220,8 @@ object Types extends LazyLogging {
     schema.fields
       .map { field =>
         val fieldType = Types.exasolTypeFromSparkDataType(field.dataType)
-        val nameType = s"${field.name} $fieldType"
+        val quotedFieldName = quoteIdentifier(field.name)
+        val nameType = s"$quotedFieldName $fieldType"
         if (field.nullable) {
           nameType
         } else {
